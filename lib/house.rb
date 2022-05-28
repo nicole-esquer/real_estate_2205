@@ -1,9 +1,8 @@
 class House
   attr_reader :price, :address, :rooms
-  attr_accessor :price
 
   def initialize(price, address)
-    @price = price
+    @price = price.delete("$").to_i
     @address = address
     @rooms = []
   end
@@ -13,7 +12,7 @@ class House
   end
 
   def above_market_average?
-    return true if @price >= "$500000"
+    return true if @price >= 500000
     false
   end
 
@@ -29,13 +28,17 @@ class House
   end
 
   def area
-   @length *= @width.to_i
-   total = @room_1.area + @room_2.area + @room_3.area + @room_4.area
+    total_area = 0
+
+    @rooms.each do |room|
+      total_area += room.area
+    end
+    total_area
   end
 
   def details
-    details = {"price" => 400000, "address" => "123 sugar lane"}
+    {"price" => @price,
+    "address" => @address}
   end
-
 
 end
